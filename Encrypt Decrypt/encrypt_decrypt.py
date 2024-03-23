@@ -1,47 +1,71 @@
-def Encrypt(file):
-    f = open("hello.txt", "r")
-    content = f.read()
+import tkinter as tk
+from tkinter import filedialog, Text, messagebox
 
-    key = int(input("Enter the key : "))
+def Encrypt():
+    fname = filedialog.askopenfilename()
+    if fname:
+        f = open(fname, "r")
+        content = f.read()
+        f.close()
 
-    encrypt = ""
+        key = int(key_var.get())
 
-    for ch in content:
-        if ch.islower():
-            encrypt += chr(ord('a')+((ord(ch)+key-ord('a'))%26))
-        elif ch.isupper():
-            encrypt += chr(ord('A')+((ord(ch)+key-ord('A'))%26))
-        elif ch.isdigit():
-            encrypt += str((int(ch)+key)%10)
-        else:
-            encrypt += ch
+        encrypt = ""
 
-    print(encrypt)
+        for ch in content:
+            if ch.islower():
+                encrypt += chr(ord('a')+((ord(ch)+key-ord('a'))%26))
+            elif ch.isupper():
+                encrypt += chr(ord('A')+((ord(ch)+key-ord('A'))%26))
+            elif ch.isdigit():
+                encrypt += str((int(ch)+key)%10)
+            else:
+                encrypt += ch
 
-    with open("hello.txt", "w") as f:
-        f.write(encrypt)
+        with open(fname, "w") as f:
+            f.write(encrypt)
 
-def Decrypt(file):    
-    f = open(file, "r")
-    content = f.read()
+        messagebox.showinfo("Success!", "Your file hase been successfully encrypted now.") 
 
-    key = int(input("Enter the key : "))
+def Decrypt():
+    fname = filedialog.askopenfilename() 
+    if fname:   
+        f = open(fname, "r")
+        content = f.read()
 
-    decrypt = ""
+        key = int(key_var.get())
 
-    for ch in content:
-        if ch.islower():
-            decrypt += chr(ord('a')+((ord(ch)-key-ord('a'))%26))
-        elif ch.isupper():
-            decrypt += chr(ord('A')+((ord(ch)-key-ord('A'))%26))
-        elif ch.isdigit():
-            decrypt += str((10+int(ch)-key)%10)
-        else:
-            decrypt += ch
+        decrypt = ""
 
-    print(decrypt)
+        for ch in content:
+            if ch.islower():
+                decrypt += chr(ord('a')+((ord(ch)-key-ord('a'))%26))
+            elif ch.isupper():
+                decrypt += chr(ord('A')+((ord(ch)-key-ord('A'))%26))
+            elif ch.isdigit():
+                decrypt += str((10+int(ch)-key)%10)
+            else:
+                decrypt += ch
 
-    with open("hello.txt", "w") as f:
-        f.write(decrypt)
+        with open(fname, "w") as f:
+            f.write(decrypt)
+        
+        messagebox.showinfo("Success!", "Your file hase been successfully decrypted now.") 
 
-Decrypt("hello.txt")
+
+root = tk.Tk()
+root.title("Encryptor & Decryptor")
+root.geometry("600x400")
+
+key_var=tk.StringVar()
+key_label = tk.Label(root, text="Enter the key : ")
+key_entry = tk.Entry(root,textvariable = key_var)
+enc_btn = tk.Button(root, text="Encrypt", command=Encrypt)
+dec_btn = tk.Button(root, text="Decrypt", command=Decrypt)
+
+key_label.grid(row=0, column=0)
+key_entry.grid(row=0, column=1)
+enc_btn.grid(row=1, column=0)
+dec_btn.grid(row=1, column=1)
+
+root.mainloop()
