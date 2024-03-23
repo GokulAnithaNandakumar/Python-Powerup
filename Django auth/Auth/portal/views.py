@@ -12,8 +12,7 @@ def log_in(request):
         # Handle the form
         username = request.POST['username']
         password = request.POST['password']
-        
-        print(username, password)
+
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
@@ -30,8 +29,7 @@ def register(request):
         email = request.POST['email']
         password = request.POST['password']
         confirm_password = request.POST['confirm_password']
-        
-        print(username, password)
+      
         
         if password == confirm_password:
             # Check if the username already exists
