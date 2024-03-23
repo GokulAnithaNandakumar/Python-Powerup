@@ -26,7 +26,7 @@ root.geometry("600x400")
 menubar = tk.Menu()
 file_menu = tk.Menu(menubar)
 
-file_menu.add_command(label="New")
+file_menu.add_command(label="New", command=new_file)
 file_menu.add_command(label="Open", command=open_file)
 file_menu.add_command(label="Save", command=save_file)
 file_menu.add_command(label="Exit", command=root.quit)
